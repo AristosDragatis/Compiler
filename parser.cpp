@@ -20,11 +20,11 @@ struct Symbol {
 };
 
 
-map<string, string> symbolTable; // πίνακας συμβόλων
+map<string, string> symbolTable; // symbol table
 map<Symbol, set<string>> FIRST;
 map<Symbol, set<string>> FOLLOW;
 map<Symbol, map<string, vector<Symbol>>> parseTable;
-stack<Symbol> parsingStack; // αρχική στοίβα για συντακτική ανάλυση
+stack<Symbol> parsingStack; // initial stack for parsing
 vector<string> tokens;
 map<Symbol, vector<vector<Symbol>>> grammar;
 
@@ -33,7 +33,7 @@ void addRule(const Symbol& lhs, const vector<Symbol>& rhs) {
 }
 
 /*
-Γραμματική (LL(1)):
+grammar (LL(1)):
 
 E  → T E' ;
 E' → + T E' | - T E' | ε
@@ -70,7 +70,7 @@ void buildParseTable() {
     Symbol eq("=", TERMINAL);
     Symbol dbl("double", TERMINAL), flt("float", TERMINAL), in("int", TERMINAL), interval("Interval", TERMINAL), ivector("IntervalVector", TERMINAL);
 
-    // πίνακας συντακτικής ανάλυσης
+    // parsing table
     parseTable[E]["id"] = {T, Ep, semi};
     parseTable[E]["("] = {T, Ep, semi};
     parseTable[E]["num"] = {T, Ep, semi};
@@ -102,7 +102,7 @@ void buildParseTable() {
 }
 
 
-// το πραγματικό input του χρήστη
+// user input
 void load_input(const string& filename) {
     ifstream file(filename);
     if (!file.is_open()) {
@@ -153,7 +153,7 @@ void loadTokens(const string& filename) {
 }
 
 
-// stack automata / αυτόματο στοίβας
+// stack automata
 bool parse() {
     stack<Symbol> outputStack;
     parsingStack.push(Symbol("$", TERMINAL));
@@ -171,7 +171,7 @@ bool parse() {
             if (top.name == currentToken) {
                 index++;
                 cout << "Match! Moving to next token." << endl;
-                outputStack.push(top); // Αποθήκευση του τερματικού
+                outputStack.push(top); // save the terminal symbol
                 if (top.name == "id") {
                     symbolTable[currentToken] = "variable";
                 } else if (top.name == "num") {
@@ -221,7 +221,7 @@ struct AstNode {
 };
 
 
-// Σημασιολογική ανάλυση
+// Semantic analysis
 void semanticAnalysis(AstNode* root) {
     if (root == nullptr) {
         cout << "Error: No AST to perform semantic analysis on." << endl;
@@ -241,7 +241,7 @@ void semanticAnalysis(AstNode* root) {
 
     size_t index = 0;  
     while (!parsingStack.empty() && index < tokens.size()) {
-        // Παίρνουμε το τρέχον token από την tokens.
+        // current token from tokens
         string currentToken = tokens[index];
         Symbol symbol = parsingStack.top();
         parsingStack.pop();
@@ -310,7 +310,7 @@ AstNode* createAstNode(string name, string value = "") {
 AstNode* buildAST(stack<Symbol> outputStack, const map<Symbol, vector<vector<Symbol>>>& grammar) {
     stack<AstNode*> astStack;
 
-    // Αντιστροφή του outputStack για σωστή σειρά
+    // Reversed output
     stack<Symbol> reversedOutput;
     while (!outputStack.empty()) {
         reversedOutput.push(outputStack.top());
@@ -325,17 +325,17 @@ AstNode* buildAST(stack<Symbol> outputStack, const map<Symbol, vector<vector<Sym
     }
     cout << endl;
 
-    // Επεξεργασία της στοίβας
+    // Edit the Stack
     while (!reversedOutput.empty()) {
         Symbol symbol = reversedOutput.top();
         reversedOutput.pop();
 
         if (symbol.type == TERMINAL) {
-            // Δημιουργία φύλλου για τερματικό σύμβολο
+            // creating leaf for terminal symbol
             cout << "Creating leaf node for terminal: " << symbol.name << endl;
             astStack.push(new AstNode(symbol.name, symbol.name));
         } else if (symbol.type == NON_TERMINAL && grammar.count(symbol)) {
-            // Δημιουργία κόμβου για μη-τερματικό σύμβολο
+            // creating node for non-terminal symbol
             AstNode* parent = new AstNode(symbol.name);
             cout << "Creating non-terminal node: " << symbol.name << endl;
 
