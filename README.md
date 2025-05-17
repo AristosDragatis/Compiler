@@ -1,8 +1,8 @@
 # Interval Arithmetic Compiler
 
-This project implements a basic **compiler for interval arithmetic expressions**, built using **Flex** for lexical analysis and **C++** for parsing, AST construction, and evaluation preparation.
+This project implements a basic **compiler for interval arithmetic expressions**, built using **Flex** for lexical analysis and **C++** for parsing, semantic analysis, and AST construction.
 
-It parses arithmetic expressions involving intervals and generates an Abstract Syntax Tree (AST) that can be further used for semantic analysis, evaluation, or code generation. The grammar supports typical arithmetic operations (`+`, `-`, `*`, `/`) and handles operator precedence and associativity.
+It parses arithmetic expressions , performs semantic checks, and generates an Abstract Syntax Tree (AST) that represents the structure of the expression. The grammar supports standard arithmetic operations (`+`, `-`, `*`, `/`) with proper handling of precedence, associativity, and parentheses.
 
 ## Features
 
