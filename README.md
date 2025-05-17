@@ -11,7 +11,6 @@ It parses arithmetic expressions involving intervals and generates an Abstract S
 - Abstract Syntax Tree (AST) construction
 - Symbol table management
 - Handles negative numbers and parentheses
-- Ready for extension to interval arithmetic semantics
 
 ## File Structure
 
