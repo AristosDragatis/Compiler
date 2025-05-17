@@ -36,19 +36,19 @@ It parses arithmetic expressions involving intervals and generates an Abstract S
     ```
 This creates a lex.yy.c file from your lexer.l.
 
-2. Compile the lexer and parser together:
+**2. Compile the lexer and parser together:**
 
   ```terminal
   g++ lex.yy.c parser.cpp -o interval_compiler
   ```
 
-3. Prepare input:
+**3. Prepare input:**
 Write your arithmetic expression in input_.txt (e.g., x1 + x2; ).
 
 Run the lexer to tokenize the input and save tokens to tokens.txt.
 
 
-4. Run the compiler:
+**4. Run the compiler:**
 ```terminal
   ./interval_compiler
   ```
