@@ -16,10 +16,8 @@ It parses arithmetic expressions , performs semantic checks, and generates an Ab
 
 - `lexer.l` – Flex lexer specification
 - `parser.cpp` – Main parser, AST builder, and symbol table logic
-- `input_.txt` – Input arithmetic expression (raw text)
+- `input_.txt` – Input arithmetic expression (user input)
 - `tokens.txt` – Tokenized version of the input (output from Flex)
-- `Makefile` – (Optional) You can create one for automated build
-- `README.md` – Project documentation
 
 ## Requirements
 
